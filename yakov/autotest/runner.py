@@ -98,10 +98,10 @@ class TestRunnerFailReporting(TestRunnerBase):
             print str(test_result)
 
 
-class VerboseReporter():
+class GenericReporter():
 
     def report_test_started(self, test_function):
-        print 'Executing: {0}'.format(test_function.__name__)
+        pass
 
     def report_test_finished(self, test_result):
         print str(test_result)
@@ -110,19 +110,19 @@ class VerboseReporter():
         print 'Ran: {0}, Passed: {1}, Failed: {2}'.format(ran, passed, failed)
 
 
-class FailReporter():
+class VerboseReporter(GenericReporter):
 
     def report_test_started(self, test_function):
-        pass
+        print 'Executing: {0}'.format(test_function.__name__)
+
+
+class FailReporter(GenericReporter):
 
     def report_test_finished(self, test_result):
         if test_result._result == test_result.PASSED:
             print '.'
         else:
             print str(test_result)
-
-    def report_all_finished(self, ran, passed, failed):
-        print 'Ran: {0}, Passed: {1}, Failed: {2}'.format(ran, passed, failed)
 
 
 class TestRunnerReporter():
